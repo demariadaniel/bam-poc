@@ -10,10 +10,8 @@ import histogram from "bam.iobio/client/js/histogram.d3.js";
 import histogramViewFinder from "bam.iobio/client/js/histogramViewFinder.d3.js";
 import iobioViz from "bam.iobio/client/js/iobio.viz.js";
 import iobio from "bam.iobio/client/js/iobio.min.js";
-import jquery from "bam.iobio/client/js/jquery.min.js";
 import nprogress from "bam.iobio/client/js/nprogress.js";
 import rdp from "bam.iobio/client/js/rdp.js";
-import queue from "bam.iobio/client/js/queue.min.js";
 import movingLine from "bam.iobio/client/js/movingLine.d3.js";
 import socket from "bam.iobio/client/js/socket.io.js";
 
@@ -51,10 +49,8 @@ function App() {
           <script src={histogramViewFinder}></script>
           <script src={iobioViz}></script>
           <script src={iobio}></script>
-          <script src={jquery}></script>
           <script src={nprogress}></script>
           <script src={rdp}></script>
-          <script src={queue}></script>
           <script src={movingLine}></script>
           <script src={socket}></script>
           <script src={build}></script>
