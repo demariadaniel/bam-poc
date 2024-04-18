@@ -20,14 +20,28 @@ import socket from "bam.iobio/client/js/socket.io.js";
 import build from "bam.iobio/client/dist/build.js";
 
 function App() {
+  const bamUrl =
+    "/?bam=https://s3.amazonaws.com/iobio/NA12878/NA12878.autsome.bam";
+  const fileLoaded = Boolean(window.location.search);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        {!fileLoaded && (
+          <>
+            <img src={logo} className="App-logo" alt="logo" />
+            <p>
+              Edit <code>src/App.js</code> and save to reload.
+            </p>
+            <a href={bamUrl}>Demo URL</a>
+          </>
+        )}
         <>
+          {fileLoaded && (
+            <a className="Back-button" href={"/"}>
+              Back
+            </a>
+          )}
           <div id="app"></div>
           <script src={bamClass}></script>
           <script src={bamd3}></script>
