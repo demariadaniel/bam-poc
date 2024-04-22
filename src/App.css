@@ -3,7 +3,7 @@
 }
 
 #app {
-  width: 100%;
+  width: 66%;
 }
 
 .App-logo {
@@ -31,7 +31,11 @@
 }
 
 .Back-button {
-  margin-top: 7vh;
+  margin-top: 2vh;
+}
+
+.button-active {
+  background-color: white;
 }
 
 @keyframes App-logo-spin {
