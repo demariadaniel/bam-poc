@@ -32,18 +32,7 @@ const defaultBamContext = {
   mappingQualityDistribution: true,
 };
 
-function App() {
-  const bamUrl =
-    "/?bam=https://s3.amazonaws.com/iobio/NA12878/NA12878.autsome.bam";
-
-  const fileLoaded = Boolean(window.location.search);
-
-  const localBamConfig = JSON.parse(localStorage.getItem("bamConfig"));
-
-  const [bamContext, setBamContext] = useState(
-    localBamConfig || defaultBamContext
-  );
-
+const bamConfigPanel = (bamContext, updateContext) => {
   const {
     pieChooser,
     readCoverageBox,
@@ -56,6 +45,111 @@ function App() {
     duplicates,
     mappingQualityDistribution,
   } = bamContext;
+
+  return (
+    <div style={{ margin: "15px" }}>
+      <button
+        className={pieChooser ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("pieChooser", pieChooser);
+        }}
+      >
+        Pie Chooser
+      </button>
+      <button
+        className={readCoverageBox ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("readCoverageBox", readCoverageBox);
+        }}
+      >
+        Read Coverage
+      </button>
+      <button
+        className={readsSampledBox ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("readsSampledBox", readsSampledBox);
+        }}
+      >
+        Reads Sampled
+      </button>
+      <button
+        className={mappedReads ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("mappedReads", mappedReads);
+        }}
+      >
+        Mapped Reads
+      </button>
+      <button
+        className={forwardStrands ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("forwardStrands", forwardStrands);
+        }}
+      >
+        Forward Strands
+      </button>
+      <button
+        className={properPairs ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("properPairs", properPairs);
+        }}
+      >
+        Proper Pairs
+      </button>
+      <button
+        className={singletons ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("singletons", singletons);
+        }}
+      >
+        Singletons
+      </button>
+      <button
+        className={bothMatesMapped ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("bothMatesMapped", bothMatesMapped);
+        }}
+      >
+        Both Mates Mapped
+      </button>
+      <button
+        className={duplicates ? "config-button active" : "config-button"}
+        onClick={() => {
+          updateContext("duplicates", duplicates);
+        }}
+      >
+        Duplicates
+      </button>
+      <button
+        className={
+          mappingQualityDistribution ? "config-button active" : "config-button"
+        }
+        onClick={() => {
+          updateContext(
+            "mappingQualityDistribution",
+            mappingQualityDistribution
+          );
+        }}
+      >
+        Mapping Quality Distribution
+      </button>
+    </div>
+  );
+};
+
+function App() {
+  const bamUrl =
+    "/?bam=https://s3.amazonaws.com/iobio/NA12878/NA12878.autsome.bam";
+
+  const fileLoaded = Boolean(window.location.search);
+
+  const localBamConfig = JSON.parse(localStorage.getItem("bamConfig"));
+
+  const [bamContext, setBamContext] = useState(
+    localBamConfig || defaultBamContext
+  );
+
+  const [showBam, toggleShowBam] = useState(true);
 
   const updateContext = (key, value) => {
     const newContext = {
@@ -71,122 +165,48 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className={`App-header ${fileLoaded ? "file-loaded" : "home"}`}>
         <>
-          {fileLoaded ? (
-            <a className="Back-button" href={"/"}>
-              Back
-            </a>
-          ) : (
-            <>
-              <img src={logo} className="App-logo" alt="logo" />
-              <p>
-                Edit <code>src/App.js</code> and save to reload.
-              </p>
-              <a href={bamUrl}>Demo URL</a>
-              <div style={{ margin: "15px" }}>
-                <button
-                  className={pieChooser ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("pieChooser", pieChooser);
-                  }}
-                >
-                  Pie Chooser
-                </button>
-                <button
-                  className={readCoverageBox ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("readCoverageBox", readCoverageBox);
-                  }}
-                >
-                  Read Coverage
-                </button>
-                <button
-                  className={readsSampledBox ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("readsSampledBox", readsSampledBox);
-                  }}
-                >
-                  Reads Sampled
-                </button>
-                <button
-                  className={mappedReads ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("mappedReads", mappedReads);
-                  }}
-                >
-                  Mapped Reads
-                </button>
-                <button
-                  className={forwardStrands ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("forwardStrands", forwardStrands);
-                  }}
-                >
-                  Forward Strands
-                </button>
-                <button
-                  className={properPairs ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("properPairs", properPairs);
-                  }}
-                >
-                  Proper Pairs
-                </button>
-                <button
-                  className={singletons ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("singletons", singletons);
-                  }}
-                >
-                  Singletons
-                </button>
-                <button
-                  className={bothMatesMapped ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("bothMatesMapped", bothMatesMapped);
-                  }}
-                >
-                  Both Mates Mapped
-                </button>
-                <button
-                  className={duplicates ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext("duplicates", duplicates);
-                  }}
-                >
-                  Duplicates
-                </button>
-                <button
-                  className={mappingQualityDistribution ? "button-active" : ""}
-                  onClick={() => {
-                    updateContext(
-                      "mappingQualityDistribution",
-                      mappingQualityDistribution
-                    );
-                  }}
-                >
-                  Mapping Quality Distribution
-                </button>
-              </div>
-            </>
-          )}
-          <div id="app"></div>
-          <script src={bamClass}></script>
-          <script src={bamd3}></script>
-          <script src={d3}></script>
-          <script src={donut}></script>
-          <script src={histogram}></script>
-          <script src={histogramViewFinder}></script>
-          <script src={iobioViz}></script>
-          <script src={iobio}></script>
-          <script src={nprogress}></script>
-          <script src={rdp}></script>
-          <script src={movingLine}></script>
-          <script src={socket}></script>
-          <script src={build}></script>
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
         </>
+        {fileLoaded ? (
+          <a className="Back-button" href={"/"}>
+            Back
+          </a>
+        ) : (
+          <a href={bamUrl}>Demo URL</a>
+        )}
       </header>
+
+      {!fileLoaded && bamConfigPanel(bamContext, updateContext)}
+
+      <button
+        className={`config-button ${showBam && "active"}`}
+        onClick={() => toggleShowBam(!showBam)}
+      >
+        Show / Hide BAM
+      </button>
+
+      <div className={`bam-container ${showBam && "bam-open"}`}>
+        <h3 class="home-page-link">bam.iobio</h3>
+        <div id="app"></div>
+        <script src={bamClass}></script>
+        <script src={bamd3}></script>
+        <script src={d3}></script>
+        <script src={donut}></script>
+        <script src={histogram}></script>
+        <script src={histogramViewFinder}></script>
+        <script src={iobioViz}></script>
+        <script src={iobio}></script>
+        <script src={nprogress}></script>
+        <script src={rdp}></script>
+        <script src={movingLine}></script>
+        <script src={socket}></script>
+        <script src={build}></script>
+      </div>
     </div>
   );
 }

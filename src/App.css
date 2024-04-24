@@ -7,7 +7,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 25vmin;
   pointer-events: none;
 }
 
@@ -18,12 +18,19 @@
 }
 
 .App-header {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+
+  &.home {
+    min-height: 35vh;
+  }
+
+  &.file-loaded {
+    min-height: 12vh;
+  }
 }
 
 .App-link {
@@ -34,8 +41,24 @@
   margin-top: 2vh;
 }
 
-.button-active {
-  background-color: white;
+.bam-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &&.bam-open {
+    display: flex;
+  }
+}
+
+.config-button {
+  font-size: 22px;
+  margin: 2px;
+
+  &.active {
+    background-color: white;
+  }
 }
 
 @keyframes App-logo-spin {
