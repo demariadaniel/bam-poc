@@ -49,7 +49,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
   return (
     <div style={{ margin: "15px" }}>
       <button
-        className={pieChooser ? "config-button active" : "config-button"}
+        className={"config-button" + (pieChooser ? " active" : "")}
         onClick={() => {
           updateContext("pieChooser", pieChooser);
         }}
@@ -57,7 +57,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
         Pie Chooser
       </button>
       <button
-        className={readCoverageBox ? "config-button active" : "config-button"}
+        className={"config-button" + (readCoverageBox ? " active" : "")}
         onClick={() => {
           updateContext("readCoverageBox", readCoverageBox);
         }}
@@ -65,7 +65,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
         Read Coverage
       </button>
       <button
-        className={readsSampledBox ? "config-button active" : "config-button"}
+        className={"config-button" + (readsSampledBox ? " active" : "")}
         onClick={() => {
           updateContext("readsSampledBox", readsSampledBox);
         }}
@@ -73,7 +73,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
         Reads Sampled
       </button>
       <button
-        className={mappedReads ? "config-button active" : "config-button"}
+        className={"config-button" + (mappedReads ? " active" : "")}
         onClick={() => {
           updateContext("mappedReads", mappedReads);
         }}
@@ -81,7 +81,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
         Mapped Reads
       </button>
       <button
-        className={forwardStrands ? "config-button active" : "config-button"}
+        className={"config-button" + (forwardStrands ? " active" : "")}
         onClick={() => {
           updateContext("forwardStrands", forwardStrands);
         }}
@@ -89,7 +89,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
         Forward Strands
       </button>
       <button
-        className={properPairs ? "config-button active" : "config-button"}
+        className={"config-button" + (properPairs ? " active" : "")}
         onClick={() => {
           updateContext("properPairs", properPairs);
         }}
@@ -97,7 +97,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
         Proper Pairs
       </button>
       <button
-        className={singletons ? "config-button active" : "config-button"}
+        className={"config-button" + (singletons ? " active" : "")}
         onClick={() => {
           updateContext("singletons", singletons);
         }}
@@ -105,7 +105,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
         Singletons
       </button>
       <button
-        className={bothMatesMapped ? "config-button active" : "config-button"}
+        className={"config-button" + (bothMatesMapped ? " active" : "")}
         onClick={() => {
           updateContext("bothMatesMapped", bothMatesMapped);
         }}
@@ -113,7 +113,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
         Both Mates Mapped
       </button>
       <button
-        className={duplicates ? "config-button active" : "config-button"}
+        className={"config-button" + (duplicates ? " active" : "")}
         onClick={() => {
           updateContext("duplicates", duplicates);
         }}
@@ -122,7 +122,7 @@ const bamConfigPanel = (bamContext, updateContext) => {
       </button>
       <button
         className={
-          mappingQualityDistribution ? "config-button active" : "config-button"
+          "config-button" + (mappingQualityDistribution ? " active" : "")
         }
         onClick={() => {
           updateContext(
@@ -149,7 +149,7 @@ function App() {
     localBamConfig || defaultBamContext
   );
 
-  const [showBam, toggleShowBam] = useState(true);
+  const [showBam, toggleShowBam] = useState(false);
 
   const updateContext = (key, value) => {
     const newContext = {
@@ -165,7 +165,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className={`App-header ${fileLoaded ? "file-loaded" : "home"}`}>
+      <header
+        className={"App-header" + (fileLoaded ? " file-loaded" : " home")}
+      >
         <>
           <img src={logo} className="App-logo" alt="logo" />
           <p>
@@ -184,28 +186,33 @@ function App() {
       {!fileLoaded && bamConfigPanel(bamContext, updateContext)}
 
       <button
-        className={`config-button ${showBam && "active"}`}
+        className={"config-button" + (showBam ? " active" : "")}
         onClick={() => toggleShowBam(!showBam)}
       >
         Show / Hide BAM
       </button>
 
-      <div className={`bam-container ${showBam && "bam-open"}`}>
-        <h3 class="home-page-link">bam.iobio</h3>
+      <div className={"bam-container" + (showBam ? " bam-open" : "")}>
+        <h3 className="home-page-link">bam.iobio</h3>
+        {/* Needs to render on the page before scripts for BAM to work */}
         <div id="app"></div>
-        <script src={bamClass}></script>
-        <script src={bamd3}></script>
-        <script src={d3}></script>
-        <script src={donut}></script>
-        <script src={histogram}></script>
-        <script src={histogramViewFinder}></script>
-        <script src={iobioViz}></script>
-        <script src={iobio}></script>
-        <script src={nprogress}></script>
-        <script src={rdp}></script>
-        <script src={movingLine}></script>
-        <script src={socket}></script>
-        <script src={build}></script>
+        {showBam ? (
+          <>
+            <script src={bamClass}></script>
+            <script src={bamd3}></script>
+            <script src={d3}></script>
+            <script src={donut}></script>
+            <script src={histogram}></script>
+            <script src={histogramViewFinder}></script>
+            <script src={iobioViz}></script>
+            <script src={iobio}></script>
+            <script src={nprogress}></script>
+            <script src={rdp}></script>
+            <script src={movingLine}></script>
+            <script src={socket}></script>
+            <script src={build}></script>
+          </>
+        ) : null}
       </div>
     </div>
   );
