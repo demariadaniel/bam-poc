@@ -137,6 +137,17 @@ const bamConfigPanel = (bamContext, updateContext) => {
   );
 };
 
+const bamFileStats = (bamFile) => {
+  const { max = "" } = bamFile ? JSON.parse(bamFile) : {};
+  return (
+    <div className="file-stats">
+      <h4>File Stats</h4>
+      <p>Max Read Coverage: {max}</p>
+      <p>Detail 2</p>
+    </div>
+  );
+};
+
 function App() {
   const bamUrl =
     "/?bam=https://s3.amazonaws.com/iobio/NA12878/NA12878.autsome.bam";
@@ -149,7 +160,9 @@ function App() {
     localBamConfig || defaultBamContext
   );
 
-  const [showBam, toggleShowBam] = useState(false);
+  const [bamFile, setBamFile] = useState(null);
+
+  const [showBam, toggleShowBam] = useState(fileLoaded);
 
   const updateContext = (key, value) => {
     const newContext = {
@@ -162,6 +175,11 @@ function App() {
   useEffect(() => {
     localStorage.setItem("bamConfig", JSON.stringify(bamContext));
   }, [bamContext]);
+
+  useEffect(() => {
+    const fileStats = localStorage.getItem("bamFileStats");
+    setBamFile(fileStats);
+  }, [fileLoaded]);
 
   return (
     <div className="App">
@@ -184,6 +202,7 @@ function App() {
       </header>
 
       {!fileLoaded && bamConfigPanel(bamContext, updateContext)}
+      {fileLoaded && bamFileStats(bamFile)}
 
       <button
         className={"config-button" + (showBam ? " active" : "")}
